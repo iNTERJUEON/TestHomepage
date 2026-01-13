@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X2R History - Innovation Timeline</title>
     <style>
-        /* =========================================
+   /* =========================================
            1. 기본 설정 (Reset)
         ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,27 +21,35 @@
         a:hover { opacity: 0.7; }
         
         /* =========================================
-           2. 배경 동영상 설정
-        ========================================= */
-        .video-background {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
+         2. 배경 동영상 설정 (유튜브용으로 수정됨)
+      ========================================= */
+      .video-background {
+          position: fixed; /* 스크롤 내려도 배경 고정 */
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          z-index: -1;
+          pointer-events: none; /* 클릭 방지 */
+          overflow: hidden;
+      }
 
-        .video-background video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
+      /* 유튜브 iframe을 정중앙에 꽉 차게 맞추는 마법의 코드 */
+      .video-background iframe {
+          width: 100vw;
+          height: 56.25vw; /* 16:9 비율 유지 (가로 기준) */
+          min-height: 100vh;
+          min-width: 177.77vh; /* 16:9 비율 유지 (세로 기준) */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+      }
 
-        .overlay {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* 글씨 가독성을 위해 조금 더 어둡게(0.7) 설정 */
-        }
-
+      .overlay {
+          position: absolute; top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.6); /* 어둡기 조절 */
+          z-index: 0; /* 영상 바로 위 */
+      }
         /* =========================================
            3. 레이아웃 & 디자인
         ========================================= */
@@ -147,17 +155,20 @@
             padding: 80px 0; text-align: center; color: #555; font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-
     </style>
 </head>
 <body>
 
-    <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="bg.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-    </div>
+   <div class="video-background">
+    <iframe 
+        src="https://youtu.be/Wo719DUmfeQ?si=2TR6LQWSOesbY34V" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        style="pointer-events: none;" 
+        allowfullscreen>
+    </iframe>
+</div>
 
     <header>
         <div class="logo">X2R <span>.</span></div>
