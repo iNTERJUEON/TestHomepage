@@ -102,4 +102,86 @@
         }
         .service-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
         .icon { font-size: 40px; margin-bottom: 20px; }
-        .service-card h3 { margin-bottom: 15px; font-size: 20px; font-weight:
+        .service-card h3 { margin-bottom: 15px; font-size: 20px; font-weight: 700; color: #fff; }
+        .service-card p { color: #aaa; font-size: 0.95rem; }
+
+        /* 푸터 */
+        footer { background: rgba(0,0,0,0.8); color: #777; padding: 40px 0; text-align: center; font-size: 14px; border-top: 1px solid #333; }
+        footer p { margin-bottom: 10px; }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .nav { display: none; } /* 모바일 메뉴 숨김 (필요시 추가 구현) */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-background">
+        <iframe 
+    src="https://www.youtube.com/embed/Wo719DUmfeQ?autoplay=1&mute=1&controls=0&loop=1&playlist=Wo719DUmfeQ&playsinline=1"
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    style="pointer-events: none;" 
+    allowfullscreen>
+        <div class="overlay"></div>
+    </div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">X2R <span>.</span></a>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Leading the<br>Digital Twin Era.</h1>
+            <p>X2R은 가상과 현실의 경계를 허무는 기술로<br>더 나은 미래를 설계합니다.</p>
+            <a href="projects.html" class="btn">View Our Works</a>
+        </div>
+    </section>
+
+    <section class="about-summary">
+        <div class="container">
+            <h2 class="section-title">Who We Are</h2>
+            <p class="section-desc">끊임없는 도전과 혁신으로 메타버스 산업을 선도합니다.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">🌌</div>
+                    <h3>Metaverse</h3>
+                    <p>디지털 트윈 기반의<br>몰입형 가상 공간 구축</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">⛑️</div>
+                    <h3>Safety VR</h3>
+                    <p>산업 현장 안전을 위한<br>실감형 교육 솔루션</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">👤</div>
+                    <h3>Digital Human</h3>
+                    <p>AI 기술이 접목된<br>차세대 메타 휴먼</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>상호: (주)엑스투알 | 대표: 이기혁 | 사업자등록번호: 000-00-00000</p>
+            <p>본사: 충청북도 청주시 청원구 밀레니엄4로 48-17 | 지점: 울산광역시</p>
+            <p>Copyright © 2025 X2R Corp. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
