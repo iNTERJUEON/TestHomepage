@@ -6,24 +6,45 @@
     <title>X2R Projects</title>
     <style>
         /* =========================================
-           1. 공통 스타일 (이전과 동일)
+           1. 공통 스타일
         ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
-            color: #ffffff; overflow-x: hidden; background-color: #000; line-height: 1.6;
+            color: #ffffff; 
+            overflow-x: hidden; 
+            background-color: transparent; /* ✅ [중요] 배경 투명화 (영상이 보이게) */
+            line-height: 1.6;
         }
+
         a { text-decoration: none; color: inherit; transition: all 0.3s; }
 
-        /* 배경 동영상 */
+        /* =========================================
+           [수정됨] 유튜브 배경 동영상 설정
+        ========================================= */
         .video-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
+            pointer-events: none; /* 클릭 방지 */
         }
-        .video-background video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 유튜브 iframe을 화면 정중앙에 꽉 차게 맞추는 코드 */
+        .video-background iframe {
+            width: 100vw;
+            height: 56.25vw; /* 16:9 비율 (가로 기준) */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 16:9 비율 (세로 기준) */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8); /* 프로젝트 집중을 위해 배경을 좀 더 어둡게 */
+            background: rgba(0, 0, 0, 0.8); /* 프로젝트 집중을 위해 조금 더 어둡게 유지 */
+            z-index: 0;
         }
 
         /* 헤더 */
@@ -55,7 +76,7 @@
         }
 
         /* =========================================
-           2. 프로젝트 카드 그리드 스타일 (핵심!)
+           2. 프로젝트 카드 그리드 스타일
         ========================================= */
         .project-grid {
             display: grid;
@@ -132,9 +153,14 @@
 <body>
 
     <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="bg.mp4" type="video/mp4">
-        </video>
+        <iframe 
+            src="https://www.youtube.com/embed/mwyfdKKhhAk?autoplay=1&mute=1&controls=0&loop=1&playlist=mwyfdKKhhAk&playsinline=1" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            style="pointer-events: none;" 
+            allowfullscreen>
+        </iframe>
         <div class="overlay"></div>
     </div>
 
@@ -143,7 +169,8 @@
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="history.html">History</a>
-            <a href="projects.html" class="active">Projects</a> </nav>
+            <a href="projects.html" class="active">Projects</a> 
+        </nav>
     </header>
 
     <section class="container page-header">
@@ -159,7 +186,7 @@
         <article class="project-card scroll-hidden">
             <div class="card-image">
                 <span class="category-tag">Safety VR</span>
-                <img src="project1.png" "type=png">
+                <img src="project1.png" alt="Safety VR">
             </div>
             <div class="card-content">
                 <h3>산업재해 대응 VR</h3>
@@ -171,7 +198,7 @@
         <article class="project-card scroll-hidden" style="transition-delay: 0.1s;">
             <div class="card-image">
                 <span class="category-tag">Education</span>
-                <img src="project2.png" "type=png">
+                <img src="project2.png" alt="Education">
             </div>
             <div class="card-content">
                 <h3>이차전지 제조공정 교육</h3>
@@ -183,7 +210,7 @@
         <article class="project-card scroll-hidden" style="transition-delay: 0.2s;">
             <div class="card-image">
                 <span class="category-tag">Digital Human</span>
-                <img src="project3.png" "type=png">
+                <img src="project3.png" alt="Digital Human">
             </div>
             <div class="card-content">
                 <h3>메타 휴먼 시스템</h3>
