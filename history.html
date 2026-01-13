@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X2R History Timeline</title>
+    <style>
+        /* =========================================
+           스타일 (index.html과 동일하게 유지)
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+            color: #ffffff; overflow-x: hidden; background-color: #000;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+        a:hover { opacity: 0.7; }
+
+        /* 배경 동영상 */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+        }
+        .video-background video { width: 100%; height: 100%; object-fit: cover; }
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); /* 글씨 가독성을 위해 조금 더 어둡게 설정 */
+        }
+
+        /* 레이아웃 */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; }
+
+        /* 헤더 네비게이션 */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.2);
+        }
+        .logo { font-weight: 800; font-size: 1.8rem; letter-spacing: -0.5px; }
+        .logo span { color: #3b82f6; }
+        .nav-links a { margin-left: 30px; font-size: 0.95rem; font-weight: 500; color: #bbb; }
+        .nav-links a.active { color: #fff; font-weight: 700; } /* 현재 페이지 표시 */
+
+        /* [변경점] 서브 페이지용 페이지 타이틀 섹션 */
+        .page-header {
+            height: 50vh; /* 높이를 메인화면(100vh)의 절반으로 줄임 */
+            min-height: 400px;
+            display: flex; flex-direction: column;
+            justify-content: center; padding-top: 80px;
+        }
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 15px;
+            animation: slideUp 1s ease-out forwards;
+        }
+        .page-desc {
+            font-size: 1.2rem; color: #ccc; max-width: 600px;
+            animation: slideUp 1s ease-out 0.2s forwards; opacity: 0;
+        }
+
+        /* 연혁 콘텐츠 스타일 */
+        section.history-block { padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; gap: 40px; } }
+
+        .img-box {
+            width: 100%; height: 400px; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+            position: sticky; top: 100px; /* 스크롤 내릴 때 이미지가 따라오게 함 */
+        }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+        .img-box:hover img { transform: scale(1.05); }
+
+        .text-box .year-range {
+            font-size: 3rem; font-weight: 900; color: transparent;
+            -webkit-text-stroke: 1px rgba(37, 99, 235, 0.8); /* 파란색 테두리 */
+            margin-bottom: 20px; display: block;
+        }
+        
+        .history-list { list-style: none; border-left: 2px solid rgba(37, 99, 235, 0.3); padding-left: 25px; }
+        .history-list li { margin-bottom: 25px; font-size: 1.05rem; color: #ddd; position: relative; }
+        .history-list li::before {
+            content: ''; position: absolute; left: -32px; top: 6px;
+            width: 12px; height: 12px; background: #3b82f6; border-radius: 50%;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        .history-list li span.date { display: block; font-size: 0.85rem; color: #3b82f6; font-weight: 700; margin-bottom: 4px; }
+
+        /* 애니메이션 */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .scroll-hidden { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .scroll-show { opacity: 1; transform: translateY(0); }
+
+        footer { padding: 60px 0; text-align: center; color: #666; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 100px;}
+    </style>
+</head>
+<body>
+
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <header>
+        <div class="logo">X2R <span>.</span></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="history.html" class="active">History</a> <a href="projects.html" target="_blank">Projects</a>
+        </nav>
+    </header>
+
+    <section class="page-header container">
+        <h1 class="page-title">Our History</h1>
+        <p class="page-desc">작은 아이디어에서 시작해 글로벌 기업으로 도약하기까지,<br>X2R이 걸어온 혁신의 발자취를 소개합니다.</p>
+    </section>
+
+    <section class="container history-block">
+        <div class="grid-layout">
+            <div class="img-box scroll-hidden">
+                <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2000&auto=format&fit=crop" alt="2025 Vision">
+            </div>
+            <div class="text-box scroll-hidden">
+                <span class="year-range">2025 - 2024</span>
+                <ul class="history-list">
+                    <li><span class="date">2025.10</span>'메타 휴먼 시스템' 특허 출원</li>
+                    <li><span class="date">2025.09</span>산업재해 8종 대응 콘텐츠 v1.0 GS인증 취득</li>
+                    <li><span class="date">2025.05</span>천안과학산업진흥원 '이차전지 장비교육 AR/VR 콘텐츠 고도화Ⅱ' 제작</li>
+                    <li><span class="date">2025.05</span>충북과학기술혁신원 '4차 산업혁명 대응 선도기술 육성사업' 선정</li>
+                    <li><span class="date">2025.04</span>울산대학교 '이차전지 파우치셀 제작공정 PC/VR 교육 프로그램' 제작</li>
+                    <li><span class="date">2024.12</span>디지털트윈 기반 재난안전 메타버스 플랫폼 V1.0 GS인증</li>
+                    <li><span class="date">2024.10</span>'디지털트윈 모델링 방법 및 그 장치' 특허 출원</li>
+                    <li><span class="date">2024.04</span>기업부설연구소 설립 (충청북도 청주)</li>
+                    <li><span class="date">2024.01</span>지점 설립 (울산광역시)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="container history-block">
+        <div class="grid-layout" style="direction: rtl;">
+            <div class="img-box scroll-hidden" style="direction: ltr;">
+                <img src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=2000&auto=format&fit=crop" alt="R&D">
+            </div>
+            <div class="text-box scroll-hidden" style="direction: ltr;">
+                <span class="year-range">2023 - 2022</span>
+                <ul class="history-list">
+                    <li><span class="date">2023.10</span>중소벤처기업부 창업성장기술개발(R&D)사업 선정</li>
+                    <li><span class="date">2023.10</span>'데이터 태깅을 통한 다중 동작모드 지원 디지털트윈 시스템' 특허 출원</li>
+                    <li><span class="date">2023.09</span>충북 인공지능·메타버스 기반 산업 재난안전관리체계 강화사업 선정</li>
+                    <li><span class="date">2023.08</span>산업공정 메타버스 플랫폼 V1.0 GS인증 취득</li>
+                    <li><span class="date">2022.11</span>'메타버스 기반 통합 라이브러리 공구 미세조작 방법' 특허 출원</li>
+                    <li><span class="date">2022.05</span>과기부/NIPA 'AI융합 지역특화산업 지원사업' 선정</li>
+                    <li><span class="date">2022.02</span>교육부 학교기업 지원사업 및 과기부 XR랩 지원사업 선정</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="container history-block">
+        <div class="grid-layout">
+            <div class="img-box scroll-hidden">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2000&auto=format&fit=crop" alt="Foundation">
+            </div>
+            <div class="text-box scroll-hidden">
+                <span class="year-range">2021 - 2018</span>
+                <ul class="history-list">
+                    <li><span class="date">2021.08</span>치과방사선촬영술 시뮬레이션 VR 콘텐츠 및 가시화 SW 제작</li>
+                    <li><span class="date">2021.04</span>과학기술정보통신부/RAPA 메타버스랩 지원사업 선정</li>
+                    <li><span class="date">2020.10</span>MR 미술전시 체험 솔루션 제작 (VA커뮤니케이션즈)</li>
+                    <li><span class="date">2019.10</span>제 5회 가상증강현실 콘텐츠 DST EXPO 참가</li>
+                    <li><span class="date">2018.11</span>대한민국 안전산업박람회 참여 및 제16회 지상군 페스티벌 감사장</li>
+                    <li><span class="date">2018.09</span>육군본부 국방장비 강화 AR앱 및 영등포소방서 화재대피 AR앱 개발</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 X2R Corp. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('scroll-show');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.scroll-hidden').forEach((el) => observer.observe(el));
+    </script>
+
+</body>
+</html>
