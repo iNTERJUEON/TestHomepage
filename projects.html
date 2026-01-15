@@ -101,24 +101,54 @@
             border-color: rgba(59, 130, 246, 0.5); /* 파란색 테두리 */
         }
 
-        /* 카드 이미지 영역 */
+        /* [수정] 카드 이미지 영역 */
         .card-image {
             height: 250px; overflow: hidden; position: relative;
-        }
-        .card-image img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s;
-        }
-        .project-card:hover .card-image img {
-            transform: scale(1.1); /* 이미지 줌인 */
+            z-index: 1; /* 카테고리 태그가 위에 오도록 */
         }
 
-        /* 카테고리 태그 (왼쪽 상단) */
+        /* [추가] 이미지를 감싸는 링크 스타일 */
+        .card-image-link {
+            display: block; width: 100%; height: 100%; position: relative;
+        }
+
+        /* [수정] 이미지 스타일 */
+        .card-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s, filter 0.3s;
+        }
+
+        /* [수정] 호버 시 이미지 효과 (줌인 + 어둡게) */
+        .project-card:hover .card-image img {
+            transform: scale(1.1); 
+            filter: brightness(0.7); /* 아이콘 강조를 위해 어둡게 */
+        }
+
+        /* [추가] 재생 아이콘 스타일 */
+        .play-icon {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.5); /* 처음엔 작게 */
+            font-size: 3rem; color: #fff;
+            opacity: 0; /* 숨김 */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 텐션 있는 등장 효과 */
+            z-index: 2; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        /* 마우스 올리면 아이콘 나타남 */
+        .card-image-link:hover .play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* [수정] 카테고리 태그 (왼쪽 상단) */
         .category-tag {
             position: absolute; top: 15px; left: 15px;
             background: rgba(0, 0, 0, 0.7); padding: 5px 12px;
             border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #3b82f6;
             backdrop-filter: blur(4px);
+            z-index: 5; /* 링크보다 위에 */
         }
 
         /* 카드 텍스트 영역 */
@@ -186,72 +216,90 @@
         <article class="project-card scroll-hidden">
             <div class="card-image">
                 <span class="category-tag">Safety VR</span>
-                <img src="project1.png" alt="Safety VR">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="project1.png" alt="Safety VR">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>산업재해 대응 VR</h3>
                 <p>디지털 트윈 기술을 활용한 산업 현장 재난 안전 대응 콘텐츠입니다. 실제와 같은 시뮬레이션으로 안전 교육의 효율을 극대화합니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
         <article class="project-card scroll-hidden" style="transition-delay: 0.1s;">
             <div class="card-image">
                 <span class="category-tag">Education</span>
-                <img src="project2.png" alt="Education">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="project2.png" alt="Education">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>이차전지 제조공정 교육</h3>
                 <p>울산대학교와 협력하여 개발한 파우치셀 제조공정 VR/PC 프로그램입니다. 복잡한 공정을 가상 공간에서 안전하게 실습합니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
         <article class="project-card scroll-hidden" style="transition-delay: 0.2s;">
             <div class="card-image">
                 <span class="category-tag">Digital Human</span>
-                <img src="project3.png" alt="Digital Human">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="project3.png" alt="Digital Human">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>메타 휴먼 시스템</h3>
                 <p>2025년 특허 출원된 차세대 메타 휴먼 기술입니다. AI 기반의 자연스러운 움직임과 상호작용이 가능한 가상 인간을 구현합니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
         <article class="project-card scroll-hidden">
             <div class="card-image">
                 <span class="category-tag">Medical VR</span>
-                <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=1000&auto=format&fit=crop" alt="Dental Simulation">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=1000&auto=format&fit=crop" alt="Dental Simulation">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>치과 방사선 촬영 시뮬레이션</h3>
                 <p>서울대학교 산학협력단과 개발한 의료 교육용 VR 콘텐츠입니다. 정밀한 조작과 360도 영상으로 실습 효과를 높입니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
         <article class="project-card scroll-hidden" style="transition-delay: 0.1s;">
             <div class="card-image">
                 <span class="category-tag">Defense AR</span>
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop" alt="AR Tech">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop" alt="AR Tech">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>국방장비 AR 솔루션</h3>
                 <p>육군본부와 협력하여 개발한 국방 장비 정비 및 교육용 증강현실(AR) 어플리케이션입니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
         <article class="project-card scroll-hidden" style="transition-delay: 0.2s;">
             <div class="card-image">
                 <span class="category-tag">Exhibition</span>
-                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1000&auto=format&fit=crop" alt="Metaverse Exhibition">
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-image-link">
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1000&auto=format&fit=crop" alt="Metaverse Exhibition">
+                    <div class="play-icon">▶</div>
+                </a>
             </div>
             <div class="card-content">
                 <h3>가상 미술 전시 플랫폼</h3>
                 <p>비대면 시대의 새로운 문화 경험을 위한 MR 미술 전시 솔루션입니다. 큐레이팅 서비스와 결합된 몰입형 관람을 제공합니다.</p>
-                <a href="#" class="card-link">View Details</a>
+                <a href="https://www.youtube.com/watch?v=VIDEO_ID_HERE" target="_blank" class="card-link">Watch Video</a>
             </div>
         </article>
 
